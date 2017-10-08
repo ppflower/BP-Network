@@ -10,7 +10,6 @@ import java.util.Arrays;
 public class Main {
 
     public static void main(String[] args) {
-
         learnHandwriting();
     }
 
@@ -112,14 +111,14 @@ public class Main {
         String[] map = {"苟", "利", "国", "家", "生", "死", "以", "岂", "因", "祸", "福", "避", "趋", "之"};
 
 
-        BpDeep bpDeep = new BpDeep(3, new int[]{784,100, 14}, 0.15, 0.10, new SigmoidalFunction());
+        BpDeep bpDeep = new BpDeep(4, new int[]{784,200,50, 14}, 0.15, 0.15, new SigmoidalFunction());
 
         double[][][] trainingSet = generateTrainingSet_Hand();
 
 //        System.exit(0);
 
         System.out.println("------------------------Training Set-------------------------");
-        int time = 30;//迭代次数
+        int time = 60;//迭代次数
         while (time > 0) {
 
             double loss = 0;
@@ -156,7 +155,7 @@ public class Main {
             if (max == (int)testSet[i][2][0]-1) {
                 rightCount ++;
             }
-            System.out.println("输入" + map[(int)testSet[i][2][0]-1] + "，识别为" + map[max]);
+//            System.out.println("输入" + map[(int)testSet[i][2][0]-1] + "，识别为" + map[max]);
         }
 
         System.out.println("准确率为" + (((double) rightCount) / total));
@@ -189,9 +188,12 @@ public class Main {
             while (sampleCount[dir] == trainingCount) {
                 dir = (int)(Math.random() * 14) + 1;
             }
-            sampleCount[dir] ++;
 
-            int pic = (int)(Math.random() * trainingCount);//生成字的序号
+
+//            int pic = (int)(Math.random() * trainingCount);//生成字的序号
+            int pic = sampleCount[dir];
+
+            sampleCount[dir] ++;
 
             String path = "TRAIN/" + dir + "/" + pic + ".bmp";
             result[i][0] = BmpReader.read(path);//设置标准输入：二维数组转化成的一维数组
