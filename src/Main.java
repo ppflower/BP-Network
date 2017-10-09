@@ -111,7 +111,8 @@ public class Main {
         String[] map = {"苟", "利", "国", "家", "生", "死", "以", "岂", "因", "祸", "福", "避", "趋", "之"};
 
 
-        BpDeep bpDeep = new BpDeep(4, new int[]{784,200,50, 14}, 0.15, 0.15, new SigmoidalFunction());
+//        BpDeep bpDeep = new BpDeep(4, new int[]{784,200,50, 14}, 0.15, 0.15, new SigmoidalFunction());
+        BpDeep bpDeep = new BpDeep(4, new int[]{784,90,74, 14}, 1.05, 0.18, new SigmoidalFunction());
 
         double[][][] trainingSet = generateTrainingSet_Hand();
 
@@ -236,9 +237,11 @@ public class Main {
             while (sampleCount[dir] == testCount) {
                 dir = (int)(Math.random() * 14) + 1;
             }
-            sampleCount[dir] ++;
 
-            int pic = (int)(Math.random() * testCount + trainingCount);//生成字的序号 trainingCount-249
+
+            int pic = sampleCount[dir] + trainingCount;//生成字的序号 trainingCount-249
+
+            sampleCount[dir] ++;
 
             String path = "TRAIN/" + dir + "/" + pic + ".bmp";
             result[i][0] = BmpReader.read(path);
